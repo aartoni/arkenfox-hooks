@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = arkenfox-user.js
+
+[Action]
+Description = Update Arkenfox user.js
+When = PostTransaction
+Depends = arkenfox-user.js
+Exec = /usr/bin/arkenfox-updater
