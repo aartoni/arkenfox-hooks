@@ -7,4 +7,5 @@ Target = arkenfox-user.js
 Description = Update Arkenfox user.js
 When = PostTransaction
 Depends = arkenfox-user.js
+Depends = sudo
 Exec = /usr/bin/env sudo -u $SUDO_USER /usr/bin/arkenfox-updater
