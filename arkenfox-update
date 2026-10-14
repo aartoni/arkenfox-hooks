@@ -1,0 +1,17 @@
+#!/bin/sh
+# Update arkenfox user.js in every profile of the invoking user that already
+# has one. Run as root by arkenfox.hook.
+
+user=${SUDO_USER:-$DOAS_USER}
+[ -n "$user" ] || { echo "arkenfox: invoking user unknown, skipping"; exit 0; }
+home=$(getent passwd "$user" | cut -d: -f6)
+
+rc=0
+for userjs in \
+	"$home"/.mozilla/firefox/*/user.js \
+	"$home"/.librewolf/*/user.js \
+	"$home"/.config/librewolf/librewolf/*/user.js; do
+	[ -f "$userjs" ] || continue
+	runuser -u "$user" -- /usr/bin/arkenfox-updater -s -p "${userjs%/user.js}" </dev/null || rc=1
+done
+exit "$rc"
